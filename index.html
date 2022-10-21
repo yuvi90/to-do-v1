@@ -4,6 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image" href="/to-do-list.png" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Todo App</title>
@@ -11,25 +15,26 @@
 
 <body>
   
-  <div>
+  <header>
+    <h1>Todo List</h1>
+  </header>
   
-    <div>    
+  <div class="container todo-container">
+    <div class="input-wrapper">
       <form action="">
-        <input type="text" placeholder="Enter Items" id="inputArea">
-        <button class="addButton">Submit</button>
+        <input type="text" placeholder="Enter todos..." class="todo-input">
+        <button class="todo-add-btn"><i class="fa-solid fa-plus"></i></button>
       </form>
     </div>
-        
-    <div class="list-area">
+
+    <div class="todo-wrapper">
       <ul id="todo-list">
-        
+          <!-- TO DO'S -->
       </ul>
     </div>
-  
   </div>
-  
-  <script type="module" src="/main.js"></script>
 
+  <script type="module" src="/main.js"></script>
 </body>
 
 </html>

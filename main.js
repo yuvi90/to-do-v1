@@ -1,41 +1,84 @@
-const inputText = document.getElementById("inputArea")
-const submitButton = document.querySelector(".addButton");
+// Selectors
+const input = document.querySelector(".todo-input");
+const addButton = document.querySelector(".todo-add-btn");
 const toDoList = document.getElementById("todo-list");
-const toDoItem = document.getElementsByClassName("item");
-const toDos = ["call harry", "cook food"];
+const toDo = document.getElementsByClassName("todo");
 
-const addItem = (e) => {
-    // change form's default behaviour
-    e.preventDefault();
-    // checking if input is empty or not
-    if (inputText.value != ""){
-        // creating element
-        const newItem = document.createElement('li');
-        // adding class
-        newItem.classList.add('item');
-        // adding value
-        newItem.innerText = inputText.value;
-        // clearing input area
-        inputText.value = '';
-        // adding event listener for rermoving todo item
-        newItem.addEventListener('click', (e) => {
-            // for preventing event bubble
-            e.stopPropagation();
-            // removing todo
-            e.target.remove();
-        })
-        // adding todo to list  
-        toDoList.appendChild(newItem);
-    } 
+// Event Listeners
+document.addEventListener('DOMContentLoaded', getTodosData);
+addButton.addEventListener('click', addTodo);
+toDoList.addEventListener('click', checkRemove);
+
+// Functions
+function getTodosData() {
+    let toDos = [];
+    // Check local storage is empty ??
+    if (localStorage.getItem('todos') != null) {
+        toDos = JSON.parse(localStorage.getItem('todos'));
+        toDos.forEach(element => {
+            const newTodo = document.createElement('li');
+            newTodo.classList.add('todo');
+            newTodo.innerHTML = `${element}<i class="fa-solid fa-trash trash-icon"></i>`;
+            toDoList.appendChild(newTodo);
+        });
+    } else {
+        console.log('No Todos');
+    }
 }
 
-submitButton.addEventListener('click', addItem);
+function addTodo(event) {
+    // change form's default behaviour
+    event.preventDefault();
+    // checking if input is empty or not
+    if (input.value != '') {
+        // adding to todos array
+        saveTodosData(input.value);
+        // creating element
+        const newTodo = document.createElement('li');
+        // adding class
+        newTodo.classList.add('todo');
+        // adding content
+        newTodo.innerHTML = `${input.value}<i class="fa-solid fa-trash trash-icon"></i>`
+        // clearing input field
+        input.value = '';
+        // appending to list
+        toDoList.appendChild(newTodo);
+    }
+}
 
-// Using Local Storage
-console.log(toDos);
+function checkRemove(event) {
+    const item = event.target;
+    if (item.classList[2] === 'trash-icon') {
+        const todo = item.parentElement;
+        removeTodosData(todo);
+        // Animation
+        todo.classList.add('remove-todo');
+        todo.addEventListener('transitionend', () => {
+            todo.remove();
+        })
+    }
+}
 
-localStorage.setItem("todos", JSON.stringify(toDos));
+function saveTodosData(todo) {
+    let toDos = [];
+    // Check local storage is empty ??
+    if (localStorage.getItem('todos') != null) {
+        toDos = JSON.parse(localStorage.getItem('todos'));
+        toDos.push(todo);
+        localStorage.setItem('todos', JSON.stringify(toDos));
+    } else {
+        toDos.push(todo);
+        localStorage.setItem('todos', JSON.stringify(toDos));
+    }
+}
 
-const retrieveData = JSON.parse(localStorage.getItem("todos"));
-
-console.log(retrieveData);
+function removeTodosData(todo) {
+    let toDos = [];
+    // Check local storage is empty ??
+    if (localStorage.getItem('todos') != null) {
+        toDos = JSON.parse(localStorage.getItem('todos'));
+        const index = toDos.indexOf(todo.innerText);
+        toDos.splice(index, 1);
+        localStorage.setItem('todos', JSON.stringify(toDos));
+    }
+}
