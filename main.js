@@ -1,13 +1,11 @@
 // Selectors
-const input = document.querySelector(".todo-input");
 const addButton = document.querySelector(".todo-add-btn");
 const toDoList = document.getElementById("todo-list");
-const toDo = document.getElementsByClassName("todo");
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', getTodosData);
 addButton.addEventListener('click', addTodo);
-toDoList.addEventListener('click', checkRemove);
+toDoList.addEventListener('click', checknRemove);
 
 // Functions
 function getTodosData() {
@@ -15,40 +13,61 @@ function getTodosData() {
     // Check local storage is empty ??
     if (localStorage.getItem('todos') != null) {
         toDos = JSON.parse(localStorage.getItem('todos'));
-        toDos.forEach(element => {
+        toDos.forEach((item, index) => {
+            // creating todo
             const newTodo = document.createElement('li');
             newTodo.classList.add('todo');
-            newTodo.innerHTML = `${element}<i class="fa-solid fa-trash trash-icon"></i>`;
+            newTodo.innerText = `${item}`;
+            // creating completed button
+            const completed = document.createElement('button');
+            completed.classList.add('completed-btn');
+            completed.innerHTML = '<i class="fa-solid fa-check"></i>';
+            newTodo.appendChild(completed);
+            // creating trash button
+            const trash = document.createElement('button');
+            trash.classList.add('trash-btn');
+            trash.innerHTML = '<i class="fa-solid fa-trash"></i>';
+            newTodo.appendChild(trash);
+            // appending todo to list
             toDoList.appendChild(newTodo);
         });
-    } else {
-        console.log('No Todos');
     }
 }
 
 function addTodo(event) {
     // change form's default behaviour
     event.preventDefault();
+    const input = document.querySelector(".todo-input");
     // checking if input is empty or not
     if (input.value != '') {
-        // adding to todos array
+        // adding value to todos array storage
         saveTodosData(input.value);
-        // creating element
+        // creating todo
         const newTodo = document.createElement('li');
-        // adding class
         newTodo.classList.add('todo');
-        // adding content
-        newTodo.innerHTML = `${input.value}<i class="fa-solid fa-trash trash-icon"></i>`
+        newTodo.innerText = `${input.value}`;
+        // Div.appendChild(newTodo);
+        // creating completed button
+        const completed = document.createElement('button');
+        completed.classList.add('completed-btn');
+        completed.innerHTML = '<i class="fa-solid fa-check"></i>';
+        newTodo.appendChild(completed);
+        // creating trash button
+        const trash = document.createElement('button');
+        trash.classList.add('trash-btn');
+        trash.innerHTML = '<i class="fa-solid fa-trash"></i>';
+        newTodo.appendChild(trash);
+        // appending todo to list
+        toDoList.appendChild(newTodo);
         // clearing input field
         input.value = '';
-        // appending to list
-        toDoList.appendChild(newTodo);
     }
 }
 
-function checkRemove(event) {
+function checknRemove(event) {
     const item = event.target;
-    if (item.classList[2] === 'trash-icon') {
+
+    if (item.classList[0] === 'trash-btn') {
         const todo = item.parentElement;
         removeTodosData(todo);
         // Animation
@@ -56,6 +75,11 @@ function checkRemove(event) {
         todo.addEventListener('transitionend', () => {
             todo.remove();
         })
+    }
+    
+    if (item.classList[0] === 'completed-btn') {
+        const todo = item.parentElement;        
+        todo.classList.toggle('checked');
     }
 }
 

@@ -126,43 +126,63 @@ header {
   margin-left: 1rem;
 }
 
-/*==== TODO WRAPPER ====*/
+/*==== TODO ====*/
 
 .todo {
+  position: relative;
   background-color: #3b3b3b;
   padding: 2rem 2rem;
   margin-bottom: 1.5rem; 
   border-radius: 10px;
   font-size: 2rem;
   list-style: none;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1.5rem;
   border: 1px solid transparent;
   transition: all 0.25s ease;
 }
 .todo:hover {
   border-color: #646cff;
 }
-.todo::before{
-  content: '';
-  height: 2rem;
-  width: 2rem;
-  border-radius: 5px;
-  background-color: #fff;
-  cursor: pointer;
-}
+
 .remove-todo {
   opacity: 0;
   transform: translateY(2rem);
 }
 
-.trash-icon {
-  color: #ff0000;
-  cursor: pointer;
-  margin-left: auto;
+.checked {
+  background-color: #545454;
+  text-decoration: line-through;
 }
-.trash-icon:hover {
-  color: #861f1f;
+
+/*==== TODO BUTTONS ====*/
+
+.fa-check,
+.fa-trash {
+  pointer-events: none;
+}
+
+.completed-btn,
+.trash-btn {
+  background-color: #242424;
+  border: none;
+  padding: 0.7rem;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.completed-btn {
+  right: 6rem;
+}
+.trash-btn {
+  right: 2rem;
+}
+
+.completed-btn:hover {
+  color: green;
+}
+.trash-btn:hover {
+  color: red;
 }
