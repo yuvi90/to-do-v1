@@ -111,6 +111,7 @@ header {
 
 header h1{
   font-family: 'Oleo Script', cursive;
+  margin-top: 4rem;
 }
 
 /*==== TODO CONTAINER ====*/
@@ -125,7 +126,7 @@ header h1{
 /*==== TODO INPUT WRAPPER ====*/
 
 .input-wrapper {
-  margin: 5rem 0;
+  margin: 0;
 }
 
 .todo-input{
@@ -149,6 +150,17 @@ header h1{
 }
 
 /*==== TODO ====*/
+
+.todo-list-wrapper {
+  margin-top: 5rem;
+  max-height: 50rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
 
 .todo {
   position: relative;
@@ -202,10 +214,10 @@ header h1{
 }
 
 .completed-btn {
-  right: 6rem;
+  right: 5rem;
 }
 .trash-btn {
-  right: 2rem;
+  right: 1rem;
 }
 
 .completed-btn:hover {
@@ -213,4 +225,31 @@ header h1{
 }
 .trash-btn:hover {
   color: red;
+}
+
+/*==== Footer ====*/
+
+footer {
+  width: 100%;
+  min-height: 8rem;
+  justify-content: flex-end;
+  background-color: #545454;
+  padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+}
+
+footer div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+footer p {
+  font-size: 1.5rem;
+  font-family: 'Oleo Script', cursive;
+  letter-spacing: 1px;
 }
