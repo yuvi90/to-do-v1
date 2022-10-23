@@ -17,7 +17,6 @@ function getTodosData() {
             // creating todo
             const newTodo = document.createElement('li');
             newTodo.classList.add('todo');
-            item.completed ? newTodo.classList.add('checked') : null;
             newTodo.innerText = `${item.name}`;
             // creating completed button
             const completed = document.createElement('button');
@@ -29,6 +28,9 @@ function getTodosData() {
             trash.classList.add('trash-btn');
             trash.innerHTML = '<i class="fa-solid fa-trash"></i>';
             newTodo.appendChild(trash);
+            // ------------------------------
+            item.completed ? newTodo.classList.add('checked') : null;
+            item.completed ? completed.style.color = 'green' : null;
             // appending todo to list
             toDoList.appendChild(newTodo);
         });
@@ -82,9 +84,11 @@ function checknRemove(event) {
         const todo = item.parentElement;
         if (!todo.classList.contains('checked')) {
             todo.classList.add('checked');
+            item.style.color = 'green';
             modifyTodosData(todo, true);
         } else {
             todo.classList.remove('checked');
+            item.style.color = '#fff';
             modifyTodosData(todo, false);
         }
     }
