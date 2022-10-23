@@ -13,11 +13,12 @@ function getTodosData() {
     // Check local storage is empty ??
     if (localStorage.getItem('todos') != null) {
         toDos = JSON.parse(localStorage.getItem('todos'));
-        toDos.forEach((item, index) => {
+        toDos.forEach((item) => {
             // creating todo
             const newTodo = document.createElement('li');
             newTodo.classList.add('todo');
-            newTodo.innerText = `${item}`;
+            item.completed ? newTodo.classList.add('checked') : null;
+            newTodo.innerText = `${item.name}`;
             // creating completed button
             const completed = document.createElement('button');
             completed.classList.add('completed-btn');
@@ -76,10 +77,16 @@ function checknRemove(event) {
             todo.remove();
         })
     }
-    
+
     if (item.classList[0] === 'completed-btn') {
-        const todo = item.parentElement;        
-        todo.classList.toggle('checked');
+        const todo = item.parentElement;
+        if (!todo.classList.contains('checked')) {
+            todo.classList.add('checked');
+            modifyTodosData(todo, true);
+        } else {
+            todo.classList.remove('checked');
+            modifyTodosData(todo, false);
+        }
     }
 }
 
@@ -88,10 +95,12 @@ function saveTodosData(todo) {
     // Check local storage is empty ??
     if (localStorage.getItem('todos') != null) {
         toDos = JSON.parse(localStorage.getItem('todos'));
-        toDos.push(todo);
+        const newTodo = { name: todo, completed: false };
+        toDos.push(newTodo);
         localStorage.setItem('todos', JSON.stringify(toDos));
     } else {
-        toDos.push(todo);
+        const newTodo = { name: todo, completed: false };
+        toDos.push(newTodo);
         localStorage.setItem('todos', JSON.stringify(toDos));
     }
 }
@@ -103,6 +112,17 @@ function removeTodosData(todo) {
         toDos = JSON.parse(localStorage.getItem('todos'));
         const index = toDos.indexOf(todo.innerText);
         toDos.splice(index, 1);
+        localStorage.setItem('todos', JSON.stringify(toDos));
+    }
+}
+
+function modifyTodosData(todo, checked) {
+    let toDos = [];
+    // Check local storage is empty ??
+    if (localStorage.getItem('todos') != null) {
+        toDos = JSON.parse(localStorage.getItem('todos'));
+        const foundIndex = toDos.findIndex(element => element.name === todo.innerText);
+        toDos[foundIndex].completed = checked;
         localStorage.setItem('todos', JSON.stringify(toDos));
     }
 }
